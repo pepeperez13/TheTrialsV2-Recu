@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"business"},{"l":"business.ManagersTrials"},{"l":"business.playerTypes"},{"l":"business.typeTrials"},{"l":"persistance"},{"l":"persistance.CSV"},{"l":"persistance.JSON"},{"l":"presentation"},{"l":"presentation.controllers"}];updateSearchResults();
