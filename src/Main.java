@@ -11,6 +11,7 @@ import presentation.controllers.PaperController;
 import java.io.IOException;
 
 public class Main {
+    public int a;
     public static void main (String[] args) throws IOException {
         DataSourceOptions dataSourceOptions = null;
         ViewController viewController = new ViewController();
