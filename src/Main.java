@@ -31,22 +31,16 @@ public class Main {
         /**
          * Constructores
          */
-        GenericTrialManager genericTrialManager = new GenericTrialManager(dataSourceOptions);
-        BudgetManager budgetManager = new BudgetManager(dataSourceOptions, genericTrialManager);
-        PaperPublicationManager paperManager = new PaperPublicationManager(dataSourceOptions, genericTrialManager);
-        MasterManager masterManager = new MasterManager(dataSourceOptions, genericTrialManager);
-        DoctoralManager doctoralManager = new DoctoralManager(dataSourceOptions, genericTrialManager);
         EditionManager editionManager = new EditionManager(dataSourceOptions);
-        TrialsManagerPrueba trialsManagerPrueba = new TrialsManagerPrueba(dataSourceOptions);
-
+        TrialsManager trialsManager = new TrialsManager(dataSourceOptions);
         TeamManager teamManager = new TeamManager(dataSourceOptions);
 
-        GameExecutor gameExecutor = new GameExecutor(teamManager, budgetManager, paperManager, masterManager, doctoralManager, viewController);
+        GameExecutor gameExecutor = new GameExecutor(teamManager, viewController);
 
-        TrialControllerPrueba trialControllerPrueba = new TrialControllerPrueba(viewController, paperManager, genericTrialManager, trialsManagerPrueba);
+        TrialControllerPrueba trialControllerPrueba = new TrialControllerPrueba(viewController, trialsManager);
 
-        CompositorController compositorController = new CompositorController(viewController, editionManager, trialsManagerPrueba, trialControllerPrueba);
-        ConductorController conductorController = new ConductorController(editionManager, teamManager, viewController, gameExecutor, genericTrialManager);
+        CompositorController compositorController = new CompositorController(viewController, editionManager, trialsManager, trialControllerPrueba);
+        ConductorController conductorController = new ConductorController(editionManager, teamManager, viewController, gameExecutor, trialsManager);
 
         /**
          * Le pasamos el tipo al Controller manager

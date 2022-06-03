@@ -1,7 +1,7 @@
 package persistance.CSV;
 
-import business.ManagersTrials.TrialTypeOptions;
-import business.typeTrials.GenericTrial;
+import business.TrialTypeOptions;
+import business.trialsTypes.GenericTrial;
 import persistance.GenericTrialDAO;
 
 import java.io.File;

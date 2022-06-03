@@ -6,8 +6,6 @@ package business.playerTypes;
  * @author José Pérez
  */
 public class Master extends Player {
-    private String name;
-    private int PI;
 
     /**
      * Constructor que crea un nuevo Master
@@ -15,8 +13,7 @@ public class Master extends Player {
      * @param PI PI del master
      */
     public Master (String name, int PI) {
-        this.name = name;
-        this.PI = PI;
+        super(name, PI);
     }
 
     /**
@@ -25,7 +22,7 @@ public class Master extends Player {
      */
     @Override
     public void incrementPI (int change) {
-        PI = PI + change;
+        super.incrementPI(change);
     }
 
     /**
@@ -34,11 +31,13 @@ public class Master extends Player {
      */
     @Override
     public void decrementPI (int change) {
+        int PI = super.getPI();
         if (PI - change/2 >= 0) {
             PI = PI - change/2;
         }else{
             PI = 0;
         }
+        super.setPi(PI);
     }
 
     /**
@@ -47,11 +46,7 @@ public class Master extends Player {
      */
     @Override
     public boolean checkUpdateStatus() {
-        if ( PI >= 10) {
-            return true;
-        }else {
-            return false;
-        }
+        return super.checkUpdateStatus();
     }
 
     /**
@@ -60,7 +55,7 @@ public class Master extends Player {
      */
     @Override
     public int getPI () {
-        return PI;
+        return super.getPI();
     }
 
     /**
@@ -69,6 +64,6 @@ public class Master extends Player {
      */
     @Override
     public String getName () {
-        return name;
+        return super.getName();
     }
 }

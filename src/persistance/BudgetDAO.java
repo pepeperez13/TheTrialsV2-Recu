@@ -1,6 +1,6 @@
 package persistance;
 
-import business.typeTrials.Budget;
+import business.trialsTypes.Budget;
 import java.util.LinkedList;
 
 public interface BudgetDAO {

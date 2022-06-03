@@ -1,9 +1,7 @@
-package presentation.controllers;
+package Basura;
 
-import business.ManagersTrials.GenericTrialManager;
-import business.ManagersTrials.MasterManager;
-import business.ManagersTrials.TrialTypeOptions;
-import business.typeTrials.MasterStudies;
+import business.TrialTypeOptions;
+import business.trialsTypes.MasterStudies;
 import presentation.ViewController;
 
 /**

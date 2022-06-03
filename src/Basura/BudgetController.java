@@ -1,9 +1,7 @@
-package presentation.controllers;
+package Basura;
 
-import business.ManagersTrials.BudgetManager;
-import business.ManagersTrials.GenericTrialManager;
-import business.ManagersTrials.TrialTypeOptions;
-import business.typeTrials.Budget;
+import business.TrialTypeOptions;
+import business.trialsTypes.Budget;
 import presentation.ViewController;
 
 

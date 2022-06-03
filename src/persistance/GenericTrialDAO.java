@@ -1,9 +1,7 @@
 package persistance;
 
-import business.typeTrials.GenericTrial;
+import business.trialsTypes.GenericTrial;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
 
 public interface GenericTrialDAO {

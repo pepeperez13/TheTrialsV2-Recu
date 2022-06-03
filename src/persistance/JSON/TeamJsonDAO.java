@@ -50,10 +50,10 @@ public class TeamJsonDAO implements TeamDAO {
     @Override
     public boolean create (Player player) {
         try {
-            //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            GsonBuilder builder = new GsonBuilder();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            //GsonBuilder builder = new GsonBuilder();
             //builder.registerTypeAdapter(Player.class, new JsonDeserializerWithInheritance<Player>());
-            Gson gson = builder.setPrettyPrinting().create();
+            //Gson gson = builder.setPrettyPrinting().create();
             String lines = Files.readString(path);
             LinkedList<Player> playersList = new LinkedList<>();
             // Solo leeremos elementos si el json no está vacío
@@ -61,11 +61,12 @@ public class TeamJsonDAO implements TeamDAO {
                 playersList = gson.fromJson(lines, LinkedList.class);
             }
             playersList.add(player);
+            /*
             int i = 0;
             for (Player player1: playersList) {
                 Player newPlayer;
-                if (player1 instanceof Engineer) {
-                    newPlayer = new Engineer(player1.getName(), player1.getPI());
+                if (player1 instanceof Engineer engineer) {
+                    newPlayer = engineer;
                 }else if (player1 instanceof Master) {
                     newPlayer = new Master(player1.getName(), player1.getPI());
                 } else {
@@ -74,6 +75,7 @@ public class TeamJsonDAO implements TeamDAO {
                 playersList.set(i, newPlayer);
                 i++;
             }
+             */
             String jsonData = gson.toJson(playersList, LinkedList.class);
             Files.write(path, jsonData.getBytes());
             return true;

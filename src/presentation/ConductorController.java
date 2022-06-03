@@ -2,13 +2,11 @@ package presentation;
 
 import business.Edition;
 import business.EditionManager;
-import business.ManagersTrials.GenericTrialManager;
+import business.ManagersTrials.TrialsManager;
 import business.TeamManager;
 import business.playerTypes.Engineer;
 import business.playerTypes.Player;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -23,7 +21,7 @@ public class ConductorController {
     private TeamManager teamManager;
     private ViewController view;
     private GameExecutor gameExecutor;
-    private GenericTrialManager genericTrialManager;
+    private TrialsManager trialsManager;
 
     /**
      * Construye un nuevo ConductorController, con todas las clases que este necesita
@@ -31,14 +29,13 @@ public class ConductorController {
      * @param teamManager Gestiona aquello relacionado con los jugadores (team)
      * @param view Gestiona aquello relacionado con la interacción por pantalla
      * @param gameExecutor Se encarga de gestionar la ejecución de todos los tipos de pruebas
-     * @param genericTrialManager Gestiona lo relacdionado con las pruebas genéricas
      */
-    public ConductorController(EditionManager editionManager, TeamManager teamManager, ViewController view, GameExecutor gameExecutor, GenericTrialManager genericTrialManager) {
+    public ConductorController(EditionManager editionManager, TeamManager teamManager, ViewController view, GameExecutor gameExecutor, TrialsManager trialsManager) {
         this.editionManager = editionManager;
         this.teamManager = teamManager;
         this.view = view;
         this.gameExecutor = gameExecutor;
-        this.genericTrialManager = genericTrialManager;
+        this.trialsManager = trialsManager;
     }
 
     /**
@@ -109,7 +106,8 @@ public class ConductorController {
         for (i = index; i < numTrials && continueExecution && !teamManager.checkDeadPlayers(); i++) {
             view.showMessage("\nTrial #" + (i+1) + " - " + editionManager.getEditionCurrentYear().getTrialNameByIndex(i));
             //Pasamos un GenericTrial al gameExecutor
-            gameExecutor.playTrial(genericTrialManager.getGenericalTrial(genericTrialManager.getIndexByName(editionManager.getEditionCurrentYear().getTrialNameByIndex(i))+1));
+            gameExecutor.playTrial(trialsManager.getTrialByName(editionManager.getEditionCurrentYear().getTrialNameByIndex(i)));
+            //gameExecutor.playTrial(genericTrialManager.getGenericalTrial(genericTrialManager.getIndexByName(editionManager.getEditionCurrentYear().getTrialNameByIndex(i))+1));
             boolean dead = teamManager.checkDeadPlayers();
             if (i != numTrials - 1 && !dead) { // Si no se han ejecutado ya todos los trials, preguntamos si seguir con ejecución o no
                 do {

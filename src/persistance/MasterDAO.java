@@ -1,8 +1,7 @@
 package persistance;
 
-import business.typeTrials.MasterStudies;
+import business.trialsTypes.MasterStudies;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 public interface MasterDAO {

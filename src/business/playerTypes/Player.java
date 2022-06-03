@@ -7,15 +7,14 @@ import java.io.Serializable;
  * @author Abraham Cedeño
  * @author José Pérez
  */
-public abstract class Player implements Serializable {
+public class Player implements Serializable {
     private String name;
     private int PI;
-    ///@SerializedName("type")
-    //private String typeName;
 
-    /*public Player () {
-        typeName = getClass().getName();
-    }*/
+    public Player(String name, int PI) {
+        this.name = name;
+        this.PI = PI;
+    }
 
     /**
      * Incrementa el PI de un jugador
@@ -62,7 +61,11 @@ public abstract class Player implements Serializable {
     }
 
     public boolean checkUpdateStatus () {
-        return false;
+        if ( PI >= 10) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

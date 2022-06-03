@@ -1,7 +1,7 @@
-package business.ManagersTrials;
+package Basura;
 
 import business.DataSourceOptions;
-import business.typeTrials.DoctoralThesis;
+import business.trialsTypes.DoctoralThesis;
 import persistance.CSV.DoctoralCsvDAO;
 import persistance.DoctoralDAO;
 import persistance.JSON.DoctoralJsonDAO;

@@ -1,14 +1,11 @@
-package business.ManagersTrials;
+package Basura;
 
 import business.DataSourceOptions;
-import business.typeTrials.PaperPublication;
+import business.trialsTypes.PaperPublication;
 import persistance.CSV.PaperCsvDAO;
 import persistance.JSON.PaperJsonDAO;
 import persistance.PaperDAO;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**

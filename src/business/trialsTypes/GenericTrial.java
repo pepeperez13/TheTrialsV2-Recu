@@ -1,6 +1,6 @@
-package business.typeTrials;
+package business.trialsTypes;
 
-import business.ManagersTrials.TrialTypeOptions;
+import business.TrialTypeOptions;
 
 /**
  * Clase que contiene el nombre y el tipo de prueba

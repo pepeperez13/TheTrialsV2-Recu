@@ -1,6 +1,6 @@
 package persistance.CSV;
 
-import business.typeTrials.Budget;
+import business.trialsTypes.Budget;
 
 import java.io.*;
 import java.nio.file.Files;

@@ -1,8 +1,7 @@
 package persistance;
 
-import business.typeTrials.DoctoralThesis;
+import business.trialsTypes.DoctoralThesis;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 public interface DoctoralDAO {

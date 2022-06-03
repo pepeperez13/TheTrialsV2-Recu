@@ -1,7 +1,7 @@
-package business.ManagersTrials;
+package Basura;
 
 import business.DataSourceOptions;
-import business.typeTrials.Budget;
+import business.trialsTypes.Budget;
 import persistance.BudgetDAO;
 import persistance.CSV.BudgetCsvDAO;
 import persistance.JSON.BudgetJsonDAO;

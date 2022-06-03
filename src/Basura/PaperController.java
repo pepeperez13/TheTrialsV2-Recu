@@ -1,13 +1,8 @@
-package presentation.controllers;
+package Basura;
 
-import business.ManagersTrials.GenericTrialManager;
-import business.ManagersTrials.PaperPublicationManager;
-import business.ManagersTrials.TrialTypeOptions;
-import business.typeTrials.PaperPublication;
+import business.TrialTypeOptions;
+import business.trialsTypes.PaperPublication;
 import presentation.ViewController;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * Controla ciertas partes de la entrada y salida de datos de los Paper

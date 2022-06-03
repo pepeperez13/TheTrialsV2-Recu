@@ -6,8 +6,7 @@ package business.playerTypes;
  * @author José Pérez
  */
 public class Doctor extends Player{
-    private String name;
-    private int PI;
+
 
     /**
      * Constructor que crea un nuevo Doctor
@@ -15,8 +14,7 @@ public class Doctor extends Player{
      * @param PI PI del doctor
      */
     public Doctor (String name, int PI) {
-        this.name = name;
-        this.PI = PI;
+        super(name, PI);
     }
 
     /**
@@ -25,7 +23,8 @@ public class Doctor extends Player{
      */
     @Override
     public void incrementPI (int change) {
-        PI = PI + change*2;
+        int PI = super.getPI() + change*2;
+        super.setPi(PI);
     }
 
     /**
@@ -34,11 +33,7 @@ public class Doctor extends Player{
      */
     @Override
     public boolean checkUpdateStatus() {
-        if ( PI >= 10) {
-            return true;
-        }else {
-            return false;
-        }
+        return super.checkUpdateStatus();
     }
 
     /**
@@ -47,7 +42,7 @@ public class Doctor extends Player{
      */
     @Override
     public String getName () {
-        return name;
+        return super.getName();
     }
 
     /**
@@ -56,6 +51,6 @@ public class Doctor extends Player{
      */
     @Override
     public int getPI () {
-        return PI;
+        return super.getPI();
     }
 }

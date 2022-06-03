@@ -1,17 +1,12 @@
 package presentation;
 
-import business.ManagersTrials.BudgetManager;
-import business.ManagersTrials.DoctoralManager;
-import business.ManagersTrials.MasterManager;
-import business.ManagersTrials.PaperPublicationManager;
 import business.TeamManager;
 import business.playerTypes.Doctor;
 import business.playerTypes.Engineer;
 import business.playerTypes.Master;
 import business.playerTypes.Player;
-import business.typeTrials.*;
+import business.trialsTypes.*;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -20,27 +15,15 @@ import java.util.Random;
  */
 public class GameExecutor {
     private final TeamManager teamManager;
-    private final BudgetManager budgetManager;
-    private final PaperPublicationManager paperManager;
-    private final MasterManager masterManager;
-    private final DoctoralManager doctoralManager;
     private final ViewController view;
 
     /**
      * Constructor del GameExecutor
      * @param teamManager Gestiona aquello relacionado con los jugadores (team)
-     * @param budgetManager Gestiona aquello relacionado con los datos de las pruebas de tipo Budget
-     * @param paperManager Gestiona aquello relacionado con los datos de las pruebas de tipo PaperPublication
-     * @param masterManager Gestiona aquello relacionado con los datos de las pruebas de tipo Master
-     * @param doctoralManager Gestiona aquello relacionado con los datos de las pruebas de tipo Doctoral
      * @param view Gestiona aquello relacionado con la interacción por pantalla
      */
-    public GameExecutor(TeamManager teamManager, BudgetManager budgetManager, PaperPublicationManager paperManager, MasterManager masterManager, DoctoralManager doctoralManager, ViewController view) {
+    public GameExecutor(TeamManager teamManager, ViewController view) {
         this.teamManager = teamManager;
-        this.budgetManager = budgetManager;
-        this.paperManager = paperManager;
-        this.masterManager = masterManager;
-        this.doctoralManager = doctoralManager;
         this.view = view;
     }
 
@@ -49,11 +32,14 @@ public class GameExecutor {
      * @param genericTrial prueba a ejecutar
      */
     public void playTrial (GenericTrial genericTrial)  {
-        switch (genericTrial.getType()) {
-            case BUDGET -> playBudget(budgetManager.getBudgetByNameTrial(genericTrial.getName()));
-            case DOCTORAL -> playDoctoral(doctoralManager.getDoctoralByName(genericTrial.getName()));
-            case PAPER -> playPaper(paperManager.getPaperByName(genericTrial.getName()));
-            case MASTER -> playMaster(masterManager.getMasterByName(genericTrial.getName()));
+        if (genericTrial instanceof PaperPublication paper) {
+            playPaper(paper);
+        } else if (genericTrial instanceof MasterStudies master) {
+            playMaster(master);
+        } else if (genericTrial instanceof DoctoralThesis doctoral) {
+            playDoctoral(doctoral);
+        } else if (genericTrial instanceof Budget budget) {
+            playBudget(budget);
         }
     }
 

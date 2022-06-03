@@ -1,4 +1,4 @@
-package business.ManagersTrials;
+package business;
 
 /**
  * Enumeración que guarda los diferentes tipos de pruebas

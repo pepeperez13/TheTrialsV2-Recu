@@ -1,12 +1,11 @@
-package business.ManagersTrials;
+package Basura;
 
 import business.DataSourceOptions;
-import business.typeTrials.MasterStudies;
+import business.trialsTypes.MasterStudies;
 import persistance.CSV.MasterCsvDAO;
 import persistance.JSON.MasterJsonDAO;
 import persistance.MasterDAO;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 

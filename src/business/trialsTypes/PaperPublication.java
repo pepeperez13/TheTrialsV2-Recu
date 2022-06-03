@@ -1,6 +1,6 @@
-package business.typeTrials;
+package business.trialsTypes;
 
-import business.ManagersTrials.TrialTypeOptions;
+import business.TrialTypeOptions;
 
 /**
  * Representa una de las pruebas que pueden incluir las ediciones

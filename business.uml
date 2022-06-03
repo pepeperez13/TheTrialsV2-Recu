@@ -7,7 +7,7 @@
     <node x="459.0" y="579.2645739910314">business.playerTypes</node>
     <node x="0.0" y="216.0">business.EditionManager</node>
     <node x="0.0" y="515.0">business.PlayerTypeOptions</node>
-    <node x="274.0" y="579.2645739910314">business.typeTrials</node>
+    <node x="274.0" y="579.2645739910314">business.trialsTypes</node>
     <node x="260.5" y="33.5">business.DataSourceOptions</node>
     <node x="274.0" y="515.0">business.ManagersTrials</node>
     <node x="20.50000000000003" y="0.0">business.Edition</node>

@@ -1,6 +1,6 @@
 package persistance.JSON;
 
-import business.typeTrials.PaperPublication;
+import business.trialsTypes.PaperPublication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

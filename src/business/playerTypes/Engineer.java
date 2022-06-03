@@ -6,8 +6,6 @@ package business.playerTypes;
  * @author José Pérez
  */
 public class Engineer extends Player{
-    private String name;
-    private int PI;
 
     /**
      * Constructor que crea un nuevo Engineer
@@ -15,8 +13,7 @@ public class Engineer extends Player{
      * @param PI PI del ingeniero
      */
     public Engineer (String name, int PI){
-        this.name = name;
-        this.PI = PI;
+        super(name, PI);
     }
 
     /**
@@ -25,7 +22,7 @@ public class Engineer extends Player{
      */
     @Override
     public void incrementPI (int change) {
-        this.PI = this.PI + change;
+        super.incrementPI(change);
     }
 
     /**
@@ -34,11 +31,7 @@ public class Engineer extends Player{
      */
     @Override
     public void decrementPI (int change) {
-        if (this.PI - change >= 0) {
-            this.PI = this.PI - change;
-        }else{
-            PI = 0;
-        }
+       super.decrementPI(change);
     }
 
     /**
@@ -47,7 +40,7 @@ public class Engineer extends Player{
      */
     @Override
     public int getPI () {
-        return PI;
+        return super.getPI();
     }
 
     /**
@@ -56,7 +49,7 @@ public class Engineer extends Player{
      */
     @Override
     public void setPi (int PI) {
-        this.PI = PI;
+        super.setPi(PI);
     }
 
     /**
@@ -65,7 +58,7 @@ public class Engineer extends Player{
      */
     @Override
     public String getName () {
-        return name;
+        return super.getName();
     }
 
     /**
@@ -74,10 +67,6 @@ public class Engineer extends Player{
      */
     @Override
     public boolean checkUpdateStatus() {
-        if ( PI >= 10) {
-            return true;
-        }else {
-            return false;
-        }
+        return super.checkUpdateStatus();
     }
 }

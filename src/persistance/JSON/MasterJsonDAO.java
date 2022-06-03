@@ -1,7 +1,7 @@
 package persistance.JSON;
 
 
-import business.typeTrials.MasterStudies;
+import business.trialsTypes.MasterStudies;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

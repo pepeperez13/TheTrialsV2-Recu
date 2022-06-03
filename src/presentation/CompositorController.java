@@ -3,7 +3,7 @@ package presentation;
 import business.Edition;
 import business.EditionManager;
 import business.ManagersTrials.*;
-import business.typeTrials.GenericTrial;
+import business.trialsTypes.GenericTrial;
 import presentation.controllers.*;
 
 import java.util.ArrayList;
@@ -17,8 +17,7 @@ import java.util.LinkedList;
 public class CompositorController {
     private ViewController view;
     private EditionManager editionManager;
-    private GenericTrialManager genericTrialManager;
-    private TrialsManagerPrueba trialsManagerPrueba;
+    private TrialsManager trialsManager;
     private TrialControllerPrueba trialControllerPrueba;
 
     /**
@@ -26,10 +25,10 @@ public class CompositorController {
      * @param view ViewController que gestiona la interacción por pantall con el usuario
      * @param editionManager EditionManager que gestiona las ediciones
      */
-    public CompositorController(ViewController view, EditionManager editionManager, TrialsManagerPrueba trialsManagerPrueba, TrialControllerPrueba trialControllerPrueba) {
+    public CompositorController(ViewController view, EditionManager editionManager, TrialsManager trialsManager, TrialControllerPrueba trialControllerPrueba) {
         this.view = view;
         this.editionManager = editionManager;
-        this.trialsManagerPrueba = trialsManagerPrueba;
+        this.trialsManager = trialsManager;
         this.trialControllerPrueba = trialControllerPrueba;
     }
 
@@ -102,9 +101,9 @@ public class CompositorController {
      * Se encarga de listar los métodos actualmente guardados, si es que los hay
      */
     private void listTrials () {
-        if (!trialsManagerPrueba.getTrials().isEmpty()) {
+        if (!trialsManager.getTrials().isEmpty()) {
             int numTrial = askForInput("\nHere are the current trials, do you want to see more details or go back?", 1);
-            if (numTrial > 0 && numTrial <= trialsManagerPrueba.getTrials().size()) {
+            if (numTrial > 0 && numTrial <= trialsManager.getTrials().size()) {
                 trialControllerPrueba.showTrial(numTrial);
             }
         }else{
@@ -117,14 +116,14 @@ public class CompositorController {
      * coincida con su número y que dicha prueba no esté en uso por ninguna edición
      */
     private void deleteTrial () {
-        if (!trialsManagerPrueba.getTrials().isEmpty()) {
+        if (!trialsManager.getTrials().isEmpty()) {
             int numTrial = askForInput("\nWich trial do you want to delete?", 1);
-            if (numTrial > 0 && numTrial <= trialsManagerPrueba.getTrials().size()) {
+            if (numTrial > 0 && numTrial <= trialsManager.getTrials().size()) {
                 String confirmationName = view.askForString("\nEnter the trial's name for confirmation: ");
-                if (trialsManagerPrueba.getGenericalTrial(numTrial).getName().equals(confirmationName)) {
-                    GenericTrial trial = trialsManagerPrueba.getTrialByName(trialsManagerPrueba.getGenericalTrial(numTrial).getName());
-                    if (!trialsManagerPrueba.isInUse(trial)) {
-                        trialsManagerPrueba.deleteTrial(trial);
+                if (trialsManager.getGenericalTrial(numTrial).getName().equals(confirmationName)) {
+                    GenericTrial trial = trialsManager.getTrialByName(trialsManager.getGenericalTrial(numTrial).getName());
+                    if (!trialsManager.isInUse(trial)) {
+                        trialsManager.deleteTrial(trial);
                     } else {
                         view.showMessage("\nThe trial is in use and can not be deleted.");
                     }
@@ -177,7 +176,7 @@ public class CompositorController {
     private void addEdition () {
         int year, numPlayers, numTrials;
         boolean repeatYear = false;
-        if (trialsManagerPrueba.getTrials().size() != 0) {
+        if (trialsManager.getTrials().size() != 0) {
             year = view.askForInteger("\nEnter the edition's year: ");
             for (Edition edition: editionManager.getEditions()) {
                 if (edition.getYear() == year) {
@@ -199,7 +198,7 @@ public class CompositorController {
                     }
                 } while (numTrials < 3 || numTrials > 12);
                 view.showMessage("\n\t--- Trials ---\n");
-                view.showList(trialsManagerPrueba.getAllTrialsNames());
+                view.showList(trialsManager.getAllTrialsNames());
 
                 // Guardamos los indices de las pruebas que se quieren guardar en la edición
                 ArrayList<Integer> trialsIndexes = new ArrayList<>();
@@ -208,20 +207,20 @@ public class CompositorController {
                 for (int i = 0; i < numTrials; i++) {
                     do {
                         index = view.askForInteger("Pick a trial (" + (i + 1) + "/" + numTrials + "): ");
-                        if (index > trialsManagerPrueba.getTrials().size()) {
+                        if (index > trialsManager.getTrials().size()) {
                             view.showMessage("\nIncorrect option");
                         }
-                    } while (index > trialsManagerPrueba.getTrials().size());
+                    } while (index > trialsManager.getTrials().size());
                     trialsIndexes.add(index - 1);
                 }
 
                 // Activamos las pruebas introducidas como en uso
                 for (Integer trialsIndex : trialsIndexes) {
-                    trialsManagerPrueba.setUsageByName(trialsManagerPrueba.getGenericalTrial(trialsIndex + 1).getName(), true);
+                    trialsManager.setUsageByName(trialsManager.getGenericalTrial(trialsIndex + 1).getName(), true);
                 }
 
                 // Obtenemos los nombres de las pruebas con dichos índices
-                String[] names = trialsManagerPrueba.getTrialsNamesByIndexes(trialsIndexes);
+                String[] names = trialsManager.getTrialsNamesByIndexes(trialsIndexes);
 
                 if (editionManager.addEdition(year, numPlayers, numTrials, names)) {
                     view.showMessage("\nThe edition was created successfully!");
@@ -333,9 +332,9 @@ public class CompositorController {
         view.showMessage(message);
         System.out.println();
         if (option == 1) {
-            view.showList(trialsManagerPrueba.getAllTrialsNames());
+            view.showList(trialsManager.getAllTrialsNames());
             System.out.println();
-            index = trialsManagerPrueba.getAllTrialsNames().size() + 1;
+            index = trialsManager.getAllTrialsNames().size() + 1;
             view.showMessage("\t " + index + ") Back\n");
         }else if (option == 2){
             view.showList(editionManager.getEditionsNames());
@@ -362,7 +361,7 @@ public class CompositorController {
             }
             // En caso de no ser usada, se especifica como "no en uso"
             if (!contained) {
-                trialsManagerPrueba.setUsageByName(nameTrial, false);
+                trialsManager.setUsageByName(nameTrial, false);
             }
         }
     }

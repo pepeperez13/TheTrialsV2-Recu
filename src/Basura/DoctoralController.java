@@ -1,9 +1,7 @@
-package presentation.controllers;
+package Basura;
 
-import business.ManagersTrials.DoctoralManager;
-import business.ManagersTrials.GenericTrialManager;
-import business.ManagersTrials.TrialTypeOptions;
-import business.typeTrials.DoctoralThesis;
+import business.TrialTypeOptions;
+import business.trialsTypes.DoctoralThesis;
 import presentation.ViewController;
 
 /**

@@ -1,9 +1,7 @@
 package persistance;
 
-import business.typeTrials.PaperPublication;
+import business.trialsTypes.PaperPublication;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
 
 public interface PaperDAO {

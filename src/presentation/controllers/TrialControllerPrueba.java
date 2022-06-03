@@ -1,29 +1,20 @@
 package presentation.controllers;
 
-import business.ManagersTrials.GenericTrialManager;
-import business.ManagersTrials.PaperPublicationManager;
-import business.ManagersTrials.TrialTypeOptions;
-import business.ManagersTrials.TrialsManagerPrueba;
-import business.typeTrials.*;
+import business.ManagersTrials.TrialsManager;
+import business.trialsTypes.*;
 import presentation.ViewController;
 
 public class TrialControllerPrueba {
     private final ViewController view;
-    private final PaperPublicationManager paper;
-    private final GenericTrialManager genericTrialManager;
-    private final TrialsManagerPrueba trialsManagerPrueba;
+    private final TrialsManager trialsManager;
 
     /**
      * Constructor que crea un nuevo PaperController
      * @param view clase vista
-     * @param paperPublicationManager manager de los budgets que se comunica con la persistencia
-     * @param genericTrialManager manager de los trials de tipo genérico
      */
-    public TrialControllerPrueba(ViewController view, PaperPublicationManager paperPublicationManager, GenericTrialManager genericTrialManager, TrialsManagerPrueba trialsManagerPrueba) {
+    public TrialControllerPrueba(ViewController view, TrialsManager trialsManager) {
         this.view = view;
-        this.paper = paperPublicationManager;
-        this.genericTrialManager = genericTrialManager;
-        this.trialsManagerPrueba = trialsManagerPrueba;
+        this.trialsManager = trialsManager;
     }
 
     /**
@@ -54,7 +45,7 @@ public class TrialControllerPrueba {
                             int rejection = view.askForInteger("Enter the rejection probability: ");
                             if ((accepted + revision + rejection) == 100 && checkErrorPaper (String.valueOf(rejection), 6)) {
                                 GenericTrial trial = new PaperPublication(trialName, journalName, quartile, accepted, revision, rejection, false);
-                                trialsManagerPrueba.addTrial(trial);
+                                trialsManager.addTrial(trial);
                                 view.showMessage("\nThe trial was created successfully!");
                             }else{
                                 view.showMessage("\nValue must be between 0 and 100 and the sum of all percenatges has to be 100.");
@@ -86,7 +77,7 @@ public class TrialControllerPrueba {
                     int creditPass = view.askForInteger("Enter the credit pass probability: ");
                     if (checkErrorMaster(String.valueOf(creditPass), 4)){
                         GenericTrial trial = new MasterStudies(trialName, masterName, ECTS, creditPass, false);
-                        trialsManagerPrueba.addTrial(trial);
+                        trialsManager.addTrial(trial);
                         view.showMessage("\nThe trial was created successfully!");
                     }else{
                         view.showMessage("\nProbability must be in the [0, 100] range.");
@@ -110,7 +101,7 @@ public class TrialControllerPrueba {
                 int difficulty = view.askForInteger("Enter the defense difficulty: ");
                 if (checkErrorDoctoral(String.valueOf(difficulty), 3)) {
                     GenericTrial trial = new DoctoralThesis(trialName, thesis, difficulty, false);
-                    trialsManagerPrueba.addTrial(trial);
+                    trialsManager.addTrial(trial);
                     view.showMessage("\nThe trial was created successfully!");
                 }else{
                     view.showMessage("\nDifficulty must be an integer in the [1, 10] range.");
@@ -131,7 +122,7 @@ public class TrialControllerPrueba {
                 int budget = view.askForInteger("Enter the budget amount: ");
                 if (checkErrorBudget(String.valueOf(budget), 3)) {
                     GenericTrial trial = new Budget(trialName, entityName, budget, false);
-                    trialsManagerPrueba.addTrial(trial);
+                    trialsManager.addTrial(trial);
                     view.showMessage("\nThe trial was created successfully!");
                 }else{
                     view.showMessage("\nBudget amount must be in the [1000, 2000000000] range.");
@@ -149,7 +140,7 @@ public class TrialControllerPrueba {
      * @param numTrial Indice de la prueba concreta sobre la que se quiera obtener información
      */
     public void showTrial (int numTrial)  {
-        GenericTrial trial = trialsManagerPrueba.getTrialByIndex(numTrial);
+        GenericTrial trial = trialsManager.getTrialByIndex(numTrial);
         if (trial instanceof PaperPublication paper) {
             view.showMessage("\nTrial: " + paper.getArticleName() + " (Paper publication)");
             view.showMessage("Journal: " + paper.getMagazineName() + " (" + paper.getQuartile() + ")");
@@ -183,7 +174,7 @@ public class TrialControllerPrueba {
         switch (mode) {
             case 1: // Comprobamos que el nombre no este vacío y que no exista
                 if (!aux.isEmpty()) {
-                    return !paper.checkExistence(aux);
+                    return !trialsManager.checkExistance(aux);
                 }else{
                     return false;
                 }
@@ -202,7 +193,7 @@ public class TrialControllerPrueba {
         switch (mode) {
             case 1: // Comprobamos que el nombre no este vacío y que no exista
                 if (!aux.isEmpty()) {
-                    return !genericTrialManager.checkExistance(aux);
+                    return !trialsManager.checkExistance(aux);
                 }else{
                     return false;
                 }
@@ -221,7 +212,7 @@ public class TrialControllerPrueba {
         switch (mode) {
             case 1: // Comprobamos que el nombre no este vacío y que no exista
                 if (!aux.isEmpty()) {
-                    return !genericTrialManager.checkExistance(aux);
+                    return !trialsManager.checkExistance(aux);
                 }else{
                     return false;
                 }
@@ -238,7 +229,7 @@ public class TrialControllerPrueba {
         switch (mode) {
             case 1: // Comprobamos que el nombre no este vacío y que no exista
                 if (!aux.isEmpty()) {
-                    return !genericTrialManager.checkExistance(aux);
+                    return !trialsManager.checkExistance(aux);
                 }else{
                     return false;
                 }
