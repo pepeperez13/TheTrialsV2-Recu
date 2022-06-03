@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "year": 2022,
+    "numPlayers": 3,
+    "numTrials": 4,
+    "trialsNames": [
+      "Papersito",
+      "Mastersito",
+      "Doctoralsito",
+      "Budgetsito"
+    ]
+  }
+]

@@ -56,8 +56,7 @@ public class EditionManager {
      * @return Información de la edición solicitada
      */
     public Edition getEditionByIndex (int index) {
-        Edition edition = editionDAO.findByIndex(index);
-        return edition;
+        return editionDAO.findByIndex(index);
     }
 
     /**

@@ -3,15 +3,12 @@ import business.EditionManager;
 import business.ManagersTrials.*;
 import business.TeamManager;
 import presentation.*;
-import presentation.controllers.BudgetController;
-import presentation.controllers.DoctoralController;
-import presentation.controllers.MasterController;
-import presentation.controllers.PaperController;
+import presentation.controllers.*;
 
 import java.io.IOException;
 
 public class Main {
-    public int a;
+
     public static void main (String[] args) throws IOException {
         DataSourceOptions dataSourceOptions = null;
         ViewController viewController = new ViewController();
@@ -40,17 +37,15 @@ public class Main {
         MasterManager masterManager = new MasterManager(dataSourceOptions, genericTrialManager);
         DoctoralManager doctoralManager = new DoctoralManager(dataSourceOptions, genericTrialManager);
         EditionManager editionManager = new EditionManager(dataSourceOptions);
+        TrialsManagerPrueba trialsManagerPrueba = new TrialsManagerPrueba(dataSourceOptions);
 
         TeamManager teamManager = new TeamManager(dataSourceOptions);
 
         GameExecutor gameExecutor = new GameExecutor(teamManager, budgetManager, paperManager, masterManager, doctoralManager, viewController);
 
-        BudgetController budgetController = new BudgetController(budgetManager, viewController, genericTrialManager);
-        DoctoralController doctoralController = new DoctoralController(viewController, doctoralManager, genericTrialManager);
-        MasterController masterController = new MasterController(viewController, masterManager, genericTrialManager);
-        PaperController paperController = new PaperController(viewController, paperManager, genericTrialManager);
+        TrialControllerPrueba trialControllerPrueba = new TrialControllerPrueba(viewController, paperManager, genericTrialManager, trialsManagerPrueba);
 
-        CompositorController compositorController = new CompositorController(viewController, budgetController, doctoralController, masterController, paperController, editionManager, genericTrialManager, budgetManager, doctoralManager, masterManager, paperManager);
+        CompositorController compositorController = new CompositorController(viewController, editionManager, trialsManagerPrueba, trialControllerPrueba);
         ConductorController conductorController = new ConductorController(editionManager, teamManager, viewController, gameExecutor, genericTrialManager);
 
         /**

@@ -1,15 +1,15 @@
 package business.typeTrials;
 
+import business.ManagersTrials.TrialTypeOptions;
+
 /**
  * Representa el tipo de prueba Doctoral
  * @author Abraham Cedeño
  * @author José Pérez
  */
-public class DoctoralThesis {
-    private String name;
+public class DoctoralThesis extends GenericTrial{
     private String fieldOfStudy;
     private int difficulty;
-    private boolean inUse;
 
     /**
      * Método constructor que crea un nuevo DoctoralThesis, teniendo en cuenta si está en uso
@@ -19,10 +19,9 @@ public class DoctoralThesis {
      * @param inUse Nos permitirá saber si la prueba se usa en alguna edición
      */
     public DoctoralThesis(String name, String fieldOfStudy, int difficulty, boolean inUse) {
-        this.name = name;
+        super(name, TrialTypeOptions.DOCTORAL, inUse);
         this.fieldOfStudy = fieldOfStudy;
         this.difficulty = difficulty;
-        this.inUse = inUse;
     }
 
     /**
@@ -30,7 +29,7 @@ public class DoctoralThesis {
      * @return El nombre de la prueba
      */
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     /**
@@ -46,7 +45,7 @@ public class DoctoralThesis {
      * @return true si está en uso, false si no lo está
      */
     public boolean isInUse() {
-        return inUse;
+        return super.getInUse();
     }
 
     /**
@@ -55,5 +54,9 @@ public class DoctoralThesis {
      */
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public void setUsage(boolean use) {
+        super.setUsage(use);
     }
 }

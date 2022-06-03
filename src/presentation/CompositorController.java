@@ -3,10 +3,9 @@ package presentation;
 import business.Edition;
 import business.EditionManager;
 import business.ManagersTrials.*;
+import business.typeTrials.GenericTrial;
 import presentation.controllers.*;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -17,43 +16,21 @@ import java.util.LinkedList;
  */
 public class CompositorController {
     private ViewController view;
-    private BudgetController budgetController;
-    private DoctoralController doctoralController;
-    private MasterController masterController;
-    private PaperController paperController;
     private EditionManager editionManager;
     private GenericTrialManager genericTrialManager;
-    private BudgetManager budgetManager;
-    private DoctoralManager doctoralManager;
-    private MasterManager masterManager;
-    private PaperPublicationManager paperManager;
+    private TrialsManagerPrueba trialsManagerPrueba;
+    private TrialControllerPrueba trialControllerPrueba;
 
     /**
      * Construye un nuevo CompositorController, con todos las clases que este necesita
      * @param view ViewController que gestiona la interacción por pantall con el usuario
-     * @param budgetController BudgetController que gestiona las interacciones del Budget
-     * @param doctoralController DoctoralController que gestiona las interacciones del Doctoral
-     * @param masterController MasterController que gestiona las interacciones del Master
-     * @param paperController PaperController que gestiona las interacciones del Paper
      * @param editionManager EditionManager que gestiona las ediciones
-     * @param genericTrialManager GenericTrialManager que gestiona las pruebas genericas
-     * @param budgetManager BudgetManager que gestiona los Budget
-     * @param doctoralManager DoctoralManager que gestiona las pruebas Doctoral
-     * @param masterManager MasterManager que gestiona las pruebas Master
-     * @param paperManager PaperManager que gestiona las pruebas Paper
      */
-    public CompositorController(ViewController view, BudgetController budgetController, DoctoralController doctoralController, MasterController masterController, PaperController paperController, EditionManager editionManager, GenericTrialManager genericTrialManager, BudgetManager budgetManager, DoctoralManager doctoralManager, MasterManager masterManager, PaperPublicationManager paperManager) {
+    public CompositorController(ViewController view, EditionManager editionManager, TrialsManagerPrueba trialsManagerPrueba, TrialControllerPrueba trialControllerPrueba) {
         this.view = view;
-        this.budgetController = budgetController;
-        this.doctoralController = doctoralController;
-        this.masterController = masterController;
-        this.paperController = paperController;
         this.editionManager = editionManager;
-        this.genericTrialManager = genericTrialManager;
-        this.budgetManager = budgetManager;
-        this.doctoralManager = doctoralManager;
-        this.masterManager = masterManager;
-        this.paperManager = paperManager;
+        this.trialsManagerPrueba = trialsManagerPrueba;
+        this.trialControllerPrueba = trialControllerPrueba;
     }
 
     /**
@@ -117,14 +94,7 @@ public class CompositorController {
     private void addTrial () {
         view.showTypesTrials();
         int type_trial = view.askForInteger("Enter the trial's type: ");
-
-        switch (type_trial) {
-            case 1 -> paperController.add();
-            case 2 -> masterController.add();
-            case 3 -> doctoralController.add();
-            case 4 -> budgetController.add();
-            default -> view.showMessage("\nInvalid option");
-        }
+        trialControllerPrueba.add(type_trial);
     }
 
 
@@ -132,15 +102,10 @@ public class CompositorController {
      * Se encarga de listar los métodos actualmente guardados, si es que los hay
      */
     private void listTrials () {
-        if (!genericTrialManager.getTrials().isEmpty()) {
+        if (!trialsManagerPrueba.getTrials().isEmpty()) {
             int numTrial = askForInput("\nHere are the current trials, do you want to see more details or go back?", 1);
-            if (numTrial > 0 && numTrial <= genericTrialManager.getTrials().size()) {
-                switch (genericTrialManager.getTrialTypeByIndex(numTrial)) {
-                    case DOCTORAL -> doctoralController.showDoctoral(numTrial);
-                    case BUDGET -> budgetController.showBudget(numTrial);
-                    case PAPER -> paperController.showPaper(numTrial);
-                    case MASTER -> masterController.showMaster(numTrial);
-                }
+            if (numTrial > 0 && numTrial <= trialsManagerPrueba.getTrials().size()) {
+                trialControllerPrueba.showTrial(numTrial);
             }
         }else{
             view.showMessage("\nNo trials can be show as there are no existing trials");
@@ -152,45 +117,16 @@ public class CompositorController {
      * coincida con su número y que dicha prueba no esté en uso por ninguna edición
      */
     private void deleteTrial () {
-        if (!genericTrialManager.getTrials().isEmpty()) {
+        if (!trialsManagerPrueba.getTrials().isEmpty()) {
             int numTrial = askForInput("\nWich trial do you want to delete?", 1);
-            if (numTrial > 0 && numTrial <= genericTrialManager.getTrials().size()) {
+            if (numTrial > 0 && numTrial <= trialsManagerPrueba.getTrials().size()) {
                 String confirmationName = view.askForString("\nEnter the trial's name for confirmation: ");
-
-                if (genericTrialManager.getGenericalTrial(numTrial).getName().equals(confirmationName)) {
-                    switch (genericTrialManager.getGenericalTrial(numTrial).getType()) {
-                        case MASTER -> {
-                            if (!masterManager.isInUse(confirmationName)) {
-                                genericTrialManager.deleteByname(confirmationName);
-                                masterManager.deleteMaster(masterManager.getIndexByName(confirmationName));
-                            } else {
-                                view.showMessage("\nThe trial is in use and can not be deleted.");
-                            }
-                        }
-                        case PAPER -> {
-                            if (!paperManager.isInUse(confirmationName)) {
-                                genericTrialManager.deleteByname(confirmationName);
-                                paperManager.deletePaper(paperManager.getIndexByName(confirmationName));
-                            } else {
-                                view.showMessage("\nThe trial is in use and can not be deleted.");
-                            }
-                        }
-                        case BUDGET -> {
-                            if (!budgetManager.isInUse(confirmationName)) {
-                                genericTrialManager.deleteByname(confirmationName);
-                                budgetManager.deleteBudget(budgetManager.getIndexByName(confirmationName));
-                            } else {
-                                view.showMessage("\nThe trial is in use and can not be deleted.");
-                            }
-                        }
-                        case DOCTORAL -> {
-                            if (!doctoralManager.isInUse(confirmationName)) {
-                                genericTrialManager.deleteByname(confirmationName);
-                                doctoralManager.deleteMaster(doctoralManager.getIndexByName(confirmationName));
-                            } else {
-                                view.showMessage("\nThe trial is in use and can not be deleted.");
-                            }
-                        }
+                if (trialsManagerPrueba.getGenericalTrial(numTrial).getName().equals(confirmationName)) {
+                    GenericTrial trial = trialsManagerPrueba.getTrialByName(trialsManagerPrueba.getGenericalTrial(numTrial).getName());
+                    if (!trialsManagerPrueba.isInUse(trial)) {
+                        trialsManagerPrueba.deleteTrial(trial);
+                    } else {
+                        view.showMessage("\nThe trial is in use and can not be deleted.");
                     }
                 } else {
                     view.showMessage("\nThe name of the introduced trial does not match the previously indicated trial.");
@@ -241,11 +177,12 @@ public class CompositorController {
     private void addEdition () {
         int year, numPlayers, numTrials;
         boolean repeatYear = false;
-        if (!(genericTrialManager.getTrials().size() == 0)) {
+        if (trialsManagerPrueba.getTrials().size() != 0) {
             year = view.askForInteger("\nEnter the edition's year: ");
-            for (Edition edition:editionManager.getEditions()) {
+            for (Edition edition: editionManager.getEditions()) {
                 if (edition.getYear() == year) {
                     repeatYear = true;
+                    break;
                 }
             }
             if (!repeatYear) {
@@ -262,7 +199,7 @@ public class CompositorController {
                     }
                 } while (numTrials < 3 || numTrials > 12);
                 view.showMessage("\n\t--- Trials ---\n");
-                view.showList(genericTrialManager.getTrialsNames());
+                view.showList(trialsManagerPrueba.getAllTrialsNames());
 
                 // Guardamos los indices de las pruebas que se quieren guardar en la edición
                 ArrayList<Integer> trialsIndexes = new ArrayList<>();
@@ -271,18 +208,20 @@ public class CompositorController {
                 for (int i = 0; i < numTrials; i++) {
                     do {
                         index = view.askForInteger("Pick a trial (" + (i + 1) + "/" + numTrials + "): ");
-                        if (index > genericTrialManager.getTrials().size()) {
+                        if (index > trialsManagerPrueba.getTrials().size()) {
                             view.showMessage("\nIncorrect option");
                         }
-                    } while (index > genericTrialManager.getTrials().size());
+                    } while (index > trialsManagerPrueba.getTrials().size());
                     trialsIndexes.add(index - 1);
                 }
 
                 // Activamos las pruebas introducidas como en uso
-                setTrialsInUse(trialsIndexes);
+                for (Integer trialsIndex : trialsIndexes) {
+                    trialsManagerPrueba.setUsageByName(trialsManagerPrueba.getGenericalTrial(trialsIndex + 1).getName(), true);
+                }
 
                 // Obtenemos los nombres de las pruebas con dichos índices
-                String[] names = genericTrialManager.getTrialsNamesByIndexes(trialsIndexes);  // Array de strings donde se guardaran los nombres que necesitemos
+                String[] names = trialsManagerPrueba.getTrialsNamesByIndexes(trialsIndexes);
 
                 if (editionManager.addEdition(year, numPlayers, numTrials, names)) {
                     view.showMessage("\nThe edition was created successfully!");
@@ -295,23 +234,7 @@ public class CompositorController {
         }
     }
 
-    /**
-     * Método privado que coloca las pruebas que se hayan seleccionado para una edición como "en uso"
-     * @param trialsIndexes indices de las pruebas que deben colocarse en uso
-     */
-    private void setTrialsInUse (ArrayList<Integer> trialsIndexes) {
 
-        for (Integer trialsIndex : trialsIndexes) {
-            // Según el tipo de prueba que se haya utilizado
-            switch (genericTrialManager.getTrialTypeByIndex(trialsIndex + 1)) {
-                case MASTER -> masterManager.setInUseByName(genericTrialManager.getGenericalTrial(trialsIndex + 1).getName());
-                case PAPER -> paperManager.setInUseByName(genericTrialManager.getGenericalTrial(trialsIndex + 1).getName());
-                case BUDGET -> budgetManager.setInUseByName(genericTrialManager.getGenericalTrial(trialsIndex + 1).getName());
-                case DOCTORAL -> doctoralManager.setInUseByName(genericTrialManager.getGenericalTrial(trialsIndex + 1).getName());
-            }
-        }
-
-    }
 
     /**
      * Se encarga de eliminar la edición de un año concreto
@@ -325,7 +248,7 @@ public class CompositorController {
                 if (editionManager.getEditionByIndex(numEdition).getYear() == year) {
                     LinkedList<String> nameTrials = editionManager.getAllTrialsNamesInUse();
                     if (editionManager.deleteEdition(year)) {
-                        changeStateTrial(nameTrials);
+                        changeStateTrials(nameTrials);
                         view.showMessage("\nThe edition was successfully deleted.");
                     } else {
                         view.showMessage("\nEdition could not be deleted.");
@@ -362,7 +285,6 @@ public class CompositorController {
                 } while (numPlayers < 0 || numPlayers > 5);
                 editionManager.duplicateEdition(numEdition, year, numPlayers);
                 view.showMessage("\nThe edition was cloned successfully!");
-
             } else {
                 if (numEdition != editionManager.getEditions().size() + 1) {
                     view.showMessage("\nThe introduced edition is not valid.");
@@ -411,9 +333,9 @@ public class CompositorController {
         view.showMessage(message);
         System.out.println();
         if (option == 1) {
-            view.showList(genericTrialManager.getTrialsNames());
+            view.showList(trialsManagerPrueba.getAllTrialsNames());
             System.out.println();
-            index = genericTrialManager.getTrialsNames().size() + 1;
+            index = trialsManagerPrueba.getAllTrialsNames().size() + 1;
             view.showMessage("\t " + index + ") Back\n");
         }else if (option == 2){
             view.showList(editionManager.getEditionsNames());
@@ -428,7 +350,7 @@ public class CompositorController {
      * Cambiará el estado de todas aquellas pruebas que ya no estén siendo usadas por ninguna edición
      * @param nameTrials Lista con los nombres de las pruebas guardadas
      */
-    private void changeStateTrial (LinkedList<String> nameTrials) {
+    private void changeStateTrials(LinkedList<String> nameTrials) {
         boolean contained;
         // Buscamos para cada prueba, si está siendo usada por alguna edición
         for (String nameTrial : nameTrials) {
@@ -440,12 +362,7 @@ public class CompositorController {
             }
             // En caso de no ser usada, se especifica como "no en uso"
             if (!contained) {
-                switch (genericTrialManager.getTrialTypeByName(nameTrial)) {
-                    case MASTER -> masterManager.setInNotUseByName(nameTrial);
-                    case PAPER -> paperManager.setInNotUseByName(nameTrial);
-                    case BUDGET -> budgetManager.setInNotUseByName(nameTrial);
-                    case DOCTORAL -> doctoralManager.setInNotUseByName(nameTrial);
-                }
+                trialsManagerPrueba.setUsageByName(nameTrial, false);
             }
         }
     }

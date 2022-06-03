@@ -1,16 +1,17 @@
 package business.typeTrials;
 
+import business.ManagersTrials.TrialTypeOptions;
+
 /**
  * Representa una de las pruebas (en este caso siempre artículos) que pueden incluir las ediciones
  * @author Abraham Cedeño
  * @author José Pérez
  */
-public class MasterStudies {
-    private String name;
+public class MasterStudies extends GenericTrial{
     private String nom;
     private int numberCredits;
     private int probability;
-    private boolean inUse;
+
 
     /**
      * Método constructor que crea un nuevo artículo, teniendo en cuenta si está en uso
@@ -21,11 +22,10 @@ public class MasterStudies {
      * @param inUse Nos permitirá saber si la prueba se usa en alguna edición
      */
     public MasterStudies(String name, String nom, int numberCredits, int probability, boolean inUse) {
-        this.name = name;
+        super(name, TrialTypeOptions.MASTER, inUse);
         this.nom = nom;
         this.numberCredits = numberCredits;
         this.probability = probability;
-        this.inUse = inUse;
     }
 
     /**
@@ -33,7 +33,7 @@ public class MasterStudies {
      * @return El nombre de la prueba
      */
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     /**
@@ -49,7 +49,7 @@ public class MasterStudies {
      * @return true si está en uso, false si no lo está
      */
     public boolean isInUse() {
-        return inUse;
+        return super.getInUse();
     }
 
     /**
@@ -66,5 +66,9 @@ public class MasterStudies {
      */
     public int getProbability() {
         return probability;
+    }
+
+    public void setUsage(boolean use) {
+        super.setUsage(use);
     }
 }

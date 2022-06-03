@@ -9,7 +9,7 @@ public class Edition {
     private final int year;
     private final int numPlayers;
     private final int numTrials;
-    private final String[] articleNames;
+    private final String[] trialsNames;
 
     /**
      * Método constructor que crea una edición nueva
@@ -22,7 +22,7 @@ public class Edition {
         this.year = year;
         this.numPlayers = numPlayers;
         this.numTrials = numTrials;
-        this.articleNames = articles;
+        this.trialsNames = articles;
     }
 
     /**
@@ -54,10 +54,10 @@ public class Edition {
      * @return Array que contiene los nombres de las pruebas
      */
     public String[] getTrialNames() {
-        return articleNames;
+        return trialsNames;
     }
 
     public String getTrialNameByIndex (int index) {
-        return articleNames[index];
+        return trialsNames[index];
     }
 }

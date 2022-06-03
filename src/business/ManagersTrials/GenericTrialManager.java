@@ -36,7 +36,7 @@ public class GenericTrialManager {
      * @param type Tipo de la prueba
      */
     public void addTrial (String name, TrialTypeOptions type) {
-        GenericTrial genericTrial = new GenericTrial(name, type);
+        GenericTrial genericTrial = new GenericTrial(name, type, false);
         trialsDAO.create(genericTrial);
     }
 

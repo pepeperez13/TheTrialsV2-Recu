@@ -10,13 +10,20 @@ import business.ManagersTrials.TrialTypeOptions;
 public class GenericTrial {
     private String name;
     private TrialTypeOptions type;
+    private boolean inUse;
 
     /**
      * Método que crea una prueba Generica
      * @param name Nombre de la prueba
      * @param type Tipo de la prueba
      */
-    public GenericTrial(String name, TrialTypeOptions type) {
+    public GenericTrial(String name, TrialTypeOptions type, boolean inUse) {
+        this.name = name;
+        this.type = type;
+        this.inUse = inUse;
+    }
+
+    public GenericTrial (String name, TrialTypeOptions type) {
         this.name = name;
         this.type = type;
     }
@@ -35,5 +42,13 @@ public class GenericTrial {
      */
     public TrialTypeOptions getType (){
         return type;
+    }
+
+    public boolean getInUse () {
+        return inUse;
+    }
+
+    public void setUsage(boolean use) {
+        inUse = use;
     }
 }

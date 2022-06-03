@@ -1,15 +1,15 @@
 package business.typeTrials;
 
+import business.ManagersTrials.TrialTypeOptions;
+
 /**
  * Representa el tipo de prueba Budget
  * @author Abraham Cedeño
  * @author José Pérez
  */
-public class Budget {
-    private String nameTrial;
+public class Budget extends GenericTrial{
     private String nameEntity;
     private int amount;
-    private boolean inUse;
 
     /**
      * Método constructor que crea un nuevo artículo, teniendo en cuenta si está en uso
@@ -19,10 +19,9 @@ public class Budget {
      * @param inUse Nos permitirá saber si la prueba se usa en alguna edición
      */
     public Budget(String nameTrial, String nameEntity, int amount, boolean inUse) {
-        this.nameTrial = nameTrial;
+        super(nameTrial, TrialTypeOptions.BUDGET, inUse);
         this.nameEntity = nameEntity;
         this.amount = amount;
-        this.inUse = inUse;
     }
 
     /**
@@ -30,7 +29,7 @@ public class Budget {
      * @return String con el nombre de la prueba
      */
     public String getNameTrial() {
-        return nameTrial;
+        return super.getName();
     }
 
     /**
@@ -38,7 +37,7 @@ public class Budget {
      * @return true si está en uso, false si no lo está
      */
     public boolean isInUse () {
-        return inUse;
+        return super.getInUse();
     }
 
     /**
@@ -55,5 +54,9 @@ public class Budget {
      */
     public int getAmount() {
         return amount;
+    }
+
+    public void setUsage(boolean use) {
+        super.setUsage(use);
     }
 }
