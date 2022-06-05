@@ -1,6 +1,8 @@
 package presentation;
 
 
+import business.EditionManager;
+
 import java.io.IOException;
 
 /**
@@ -12,12 +14,14 @@ public class ControllerManager {
     private final ViewController viewController;
     private final CompositorController compositorController;
     private final ConductorController conductorController;
+    private static boolean endProgram;
 
     /**
      * Construye un nuevo ControllerManager, con todas las clases que este necesita
+     *
+     * @param viewController       Inicializa la vista para poder llamarla
      * @param compositorController Inicializa el CompositorController para poder llamarlo
-     * @param conductorController Inicializa el ConductorController para poder llamarlo
-     * @param viewController Inicializa la vista para poder llamarla
+     * @param conductorController  Inicializa el ConductorController para poder llamarlo
      */
     public ControllerManager(ViewController viewController, CompositorController compositorController, ConductorController conductorController) {
         this.viewController = viewController;
@@ -29,7 +33,7 @@ public class ControllerManager {
      * Método principal del programa, en forma de bucle, que da a escoger entre Compositor y Conductor,
      * cuya ejecución no acabará nunca
      */
-    public void run (String option) throws IOException {
+    public void run (String option) {
         do {
             switch (option) {
                 case "I" -> {
@@ -60,15 +64,15 @@ public class ControllerManager {
                 case "B" -> finalIndex = executeConductor(finalIndex);
                 default -> viewController.showMessage("\nIncorrect option. Option must be one of the above [A, B]");
             }
-            // EL programa sólo acabará cuando se hayan ejecutado todas las pruebas de la edición actual
-        } while (true);
+            // EL programa sólo acabará cuando se actualice el valor de la variabel "endProgram" a true
+        } while (!endProgram);
     }
 
     /**
      * LLama a la función principal de ejecución del Compositor
      */
-    private void executeCompositor () {
-        compositorController.run();
+    private int executeCompositor () {
+        return compositorController.run();
     }
 
     /**
@@ -79,5 +83,9 @@ public class ControllerManager {
      */
     private int executeConductor(int finalIndex) {
         return conductorController.run(finalIndex);
+    }
+
+    public static void setEndProgram () {
+        endProgram = true;
     }
 }

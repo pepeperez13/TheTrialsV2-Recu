@@ -51,6 +51,7 @@ public class ConductorController {
         if (!checkYear(editionManager.getEditions())) {
             view.showMessage("\nNo edition is defined for the current year (2022)");
             view.showMessage("\nShutting down...");
+            ControllerManager.setEndProgram();
         } else {
             view.showMessage("\n--- The Trials 2022 ---\n"); //Ojo con la fecha
             // Siempre que finalIndex valga 0, se tendran que volver a pedir los jugadores
@@ -63,9 +64,10 @@ public class ConductorController {
             boolean dead = teamManager.checkDeadPlayers();
             // Si se ha llegado a la última prueba y los jugadores no han perdido
             if (!dead && finalIndex == editionManager.getEditionCurrentYear().getNumTrials()) {
-                view.showMessage("\nTHE TRIALS 2022 HAVE ENDED - PLAYERS WON");
+                view.showMessage("\nTHE TRIALS 2022 HAVE ENDED - PLAYERS WON\n\nShutting down...");
                 teamManager.removeAllPlayers();
                 finalIndex = 0;
+                ControllerManager.setEndProgram();
             } else {
                 if (dead) {
                     view.showMessage("\nExecution ended... Players lost!");
@@ -73,6 +75,7 @@ public class ConductorController {
                     finalIndex = editionManager.getEditionCurrentYear().getNumTrials(); // SI han muerto todos los jugadores, la proxima edicion se tendrá que empezar de nuevo
                 } else {
                     view.showMessage("\nSaving & shutting down...");
+                    //ControllerManager.setEndProgram();
                 }
             }
         }

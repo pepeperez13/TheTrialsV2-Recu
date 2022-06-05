@@ -1,13 +1,12 @@
 package business.playerTypes;
 
-import java.io.Serializable;
 
 /**
  * Clase abstracta que representará un jugador en general
  * @author Abraham Cedeño
  * @author José Pérez
  */
-public class Player implements Serializable {
+public class Player {
     private String name;
     private int PI;
 

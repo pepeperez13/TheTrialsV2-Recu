@@ -21,11 +21,11 @@ public class MasterCsvDAO implements persistance.MasterDAO {
     /**
      * Método constructor que crea un fichero CSV nuevo, en caso de no existir
      */
-    public MasterCsvDAO () throws IOException {
+    public MasterCsvDAO () {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

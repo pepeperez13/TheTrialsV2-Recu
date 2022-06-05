@@ -21,11 +21,11 @@ public class DoctoralCsvDAO implements persistance.DoctoralDAO {
     /**
      * Método constructor que crea un fichero CSV nuevo, en caso de no existir
      */
-    public DoctoralCsvDAO () throws IOException {
+    public DoctoralCsvDAO () {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

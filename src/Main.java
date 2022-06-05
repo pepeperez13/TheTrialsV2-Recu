@@ -3,13 +3,10 @@ import business.EditionManager;
 import business.ManagersTrials.*;
 import business.TeamManager;
 import presentation.*;
-import presentation.controllers.*;
-
-import java.io.IOException;
 
 public class Main {
 
-    public static void main (String[] args) throws IOException {
+    public static void main (String[] args) {
         DataSourceOptions dataSourceOptions = null;
         ViewController viewController = new ViewController();
         /**
@@ -37,9 +34,9 @@ public class Main {
 
         GameExecutor gameExecutor = new GameExecutor(teamManager, viewController);
 
-        TrialControllerPrueba trialControllerPrueba = new TrialControllerPrueba(viewController, trialsManager);
+        TrialController trialController = new TrialController(viewController, trialsManager);
 
-        CompositorController compositorController = new CompositorController(viewController, editionManager, trialsManager, trialControllerPrueba);
+        CompositorController compositorController = new CompositorController(viewController, editionManager, trialsManager, trialController);
         ConductorController conductorController = new ConductorController(editionManager, teamManager, viewController, gameExecutor, trialsManager);
 
         /**

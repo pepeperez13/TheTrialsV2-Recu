@@ -7,7 +7,6 @@ import persistance.*;
 import persistance.CSV.*;
 import persistance.JSON.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -22,7 +21,7 @@ public class TrialsManager {
      * Método constructor que crea un nuevo manager, relacionandolo con CSV o JSON
      * @param options Opción que indica si los datos se guardan en formato CSV o JSON
      */
-    public TrialsManager(DataSourceOptions options) throws IOException {
+    public TrialsManager(DataSourceOptions options) {
         switch (options) {
             case JSON -> {
                 trialsDAO = new GenericTrialJsonDAO();

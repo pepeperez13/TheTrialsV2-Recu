@@ -4,9 +4,10 @@ import business.Edition;
 import business.EditionManager;
 import business.ManagersTrials.*;
 import business.trialsTypes.GenericTrial;
-import presentation.controllers.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 /**
@@ -18,24 +19,24 @@ public class CompositorController {
     private ViewController view;
     private EditionManager editionManager;
     private TrialsManager trialsManager;
-    private TrialControllerPrueba trialControllerPrueba;
+    private TrialController trialController;
 
     /**
      * Construye un nuevo CompositorController, con todos las clases que este necesita
      * @param view ViewController que gestiona la interacción por pantall con el usuario
      * @param editionManager EditionManager que gestiona las ediciones
      */
-    public CompositorController(ViewController view, EditionManager editionManager, TrialsManager trialsManager, TrialControllerPrueba trialControllerPrueba) {
+    public CompositorController(ViewController view, EditionManager editionManager, TrialsManager trialsManager, TrialController trialController) {
         this.view = view;
         this.editionManager = editionManager;
         this.trialsManager = trialsManager;
-        this.trialControllerPrueba = trialControllerPrueba;
+        this.trialController = trialController;
     }
 
     /**
      * Método principal en forma de bucle, que se encarga de ejecutar los métodos hasta que lo pida el usuario
      */
-    public void run () {
+    public int run () {
         int option;
 
         view.showMessage("\nEntering management mode...");
@@ -52,11 +53,13 @@ public class CompositorController {
                     break;
                 case 3:
                     view.showMessage("\nShutting down...");
+                    ControllerManager.setEndProgram();
                     break;
                 default:
                     view.showMessage("\nIncorrect option. Option must be one of the above [1, 2, 3]");
             }
         } while (option != 3);
+        return option;
     }
 
     /**
@@ -93,7 +96,7 @@ public class CompositorController {
     private void addTrial () {
         view.showTypesTrials();
         int type_trial = view.askForInteger("Enter the trial's type: ");
-        trialControllerPrueba.add(type_trial);
+        trialController.add(type_trial);
     }
 
 
@@ -104,7 +107,7 @@ public class CompositorController {
         if (!trialsManager.getTrials().isEmpty()) {
             int numTrial = askForInput("\nHere are the current trials, do you want to see more details or go back?", 1);
             if (numTrial > 0 && numTrial <= trialsManager.getTrials().size()) {
-                trialControllerPrueba.showTrial(numTrial);
+                trialController.showTrial(numTrial);
             }
         }else{
             view.showMessage("\nNo trials can be show as there are no existing trials");
@@ -124,6 +127,7 @@ public class CompositorController {
                     GenericTrial trial = trialsManager.getTrialByName(trialsManager.getGenericalTrial(numTrial).getName());
                     if (!trialsManager.isInUse(trial)) {
                         trialsManager.deleteTrial(trial);
+                        view.showMessage("\nThe trial was successfully deleted.");
                     } else {
                         view.showMessage("\nThe trial is in use and can not be deleted.");
                     }
@@ -184,7 +188,7 @@ public class CompositorController {
                     break;
                 }
             }
-            if (!repeatYear) {
+            if (!repeatYear && year >= getCurrentYear()) {
                 do {
                     numPlayers = view.askForInteger("Enter the initial number of players: ");
                     if (numPlayers < 0 || numPlayers > 5) {
@@ -226,7 +230,11 @@ public class CompositorController {
                     view.showMessage("\nThe edition was created successfully!");
                 }
             } else {
-                view.showMessage("\nThere is already an edition for this year");
+                if (year < getCurrentYear()) {
+                    view.showMessage("\nEdition year must be higher or the same than the current year");
+                } else {
+                    view.showMessage("\nThere is already an edition for this year");
+                }
             }
         } else {
             view.showMessage("\nNo editions can be created as there are no existing trials.");
@@ -364,5 +372,14 @@ public class CompositorController {
                 trialsManager.setUsageByName(nameTrial, false);
             }
         }
+    }
+
+    /**
+     * Se encarga de indicar cual es el año actual
+     * @return Nos permitirá saber si se ha encontrado una edición para este año o no
+     */
+    private int getCurrentYear () {
+        Calendar calendar = new GregorianCalendar();
+        return calendar.get(Calendar.YEAR);
     }
 }

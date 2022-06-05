@@ -1,10 +1,10 @@
-package presentation.controllers;
+package presentation;
 
 import business.ManagersTrials.TrialsManager;
 import business.trialsTypes.*;
 import presentation.ViewController;
 
-public class TrialControllerPrueba {
+public class TrialController {
     private final ViewController view;
     private final TrialsManager trialsManager;
 
@@ -12,7 +12,7 @@ public class TrialControllerPrueba {
      * Constructor que crea un nuevo PaperController
      * @param view clase vista
      */
-    public TrialControllerPrueba(ViewController view, TrialsManager trialsManager) {
+    public TrialController(ViewController view, TrialsManager trialsManager) {
         this.view = view;
         this.trialsManager = trialsManager;
     }
@@ -219,7 +219,7 @@ public class TrialControllerPrueba {
             case 2: // Comprobamos que el nombre no este vacío
                 return !aux.isEmpty();
             case 3: // Comprobamos que sea uno de los valores posibles
-                return Integer.parseInt(aux) >= 0 && Integer.parseInt(aux) <= 10;
+                return Integer.parseInt(aux) > 0 && Integer.parseInt(aux) <= 10;
         }
         // Nunca se dará un caso diferente a los del switch
         return true;
