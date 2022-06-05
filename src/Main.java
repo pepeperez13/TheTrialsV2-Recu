@@ -18,12 +18,16 @@ public class Main {
         viewController.showMessage("\nThe IEEE needs to know where your allegiance lies.\n");
         viewController.showStartingMenu();
 
-        option = viewController.askForString("Pick a faction: ");
-        if (option.equals("I")) {
-            dataSourceOptions = DataSourceOptions.CSV;
-        } else if (option.equals("II")) {
-            dataSourceOptions = DataSourceOptions.JSON;
-        }
+        do {
+            option = viewController.askForString("Pick a faction: ");
+            if (option.equals("I")) {
+                dataSourceOptions = DataSourceOptions.CSV;
+            } else if (option.equals("II")) {
+                dataSourceOptions = DataSourceOptions.JSON;
+            }else{
+                viewController.showMessage("\nFaction must be one of the above (I, II).");
+            }
+        }while (!option.equals("I")  && !option.equals("II"));
 
         /**
          * Constructores
